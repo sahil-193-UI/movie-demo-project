@@ -1,10 +1,13 @@
 <script setup>
+  import { truncateText, createSlug } from '@/utils/commonFuntions';
   import CardPlaceholder from '@/components/Placeholders/CardPlaceholder/CardPlaceholder.vue'
+  import placeholderImage from '@/assets/images/movie-poster-placeholder.png'
   import { ref, computed, onMounted } from 'vue'
   import axios from 'axios'
-
+  
   const latestMovies = ref([])
   const loading = ref(true);
+
   const fetchLatestMovies = async () => {
     try {
       const response = await axios.get(
@@ -12,21 +15,18 @@
       )
       const movies = response.data.data
       latestMovies.value = movies
-      
-        .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
+      .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
         .slice(0, 4)
-
-    } catch (error) {
+      } catch (error) {
       console.error(error)
     } finally {
       loading.value = false;
     }
   }
-
-  const truncateTitle = (title) => {
-    if (!title) return '';
-    return title.length > 100 ? title.slice(0, 100) + '...' : title;
-  };
+  
+  const handleImageError = (event) => {
+    event.target.src = placeholderImage
+  }
 
   onMounted(fetchLatestMovies)
 </script>
@@ -50,23 +50,33 @@
             v-for="movie in latestMovies"
             :key="movie.id"
             :id="movie.id"
+            @error="handleImageError"
           >
             <div class="latest__main--wrap__item--img">
-              <img :src="movie.poster" :alt="movie.title" />
+              <img 
+                :alt="movie.title"
+                :src="movie.poster || placeholderImage"
+                @error="handleImageError"
+              />
             </div>
             <div class="latest__main--wrap__item--details">
               <div class="latest__main--wrap__item--left">
-                <h5 class="font__weight--600">{{ movie.title }}</h5>
+                <h5 class="font__weight--600">{{ truncateText(movie.title, 10) }}</h5>
               </div>
               <div class="latest__main--wrap__item--right">
                 <h5>{{ movie.released }}</h5>
               </div>
             </div>
             <div class="latest__main--wrap__item--desc">
-              <p>{{ truncateTitle(movie.plot) }}</p>
+              <p>{{ truncateText(movie.plot, 50) }}</p>
             </div>
             <div class="latest__main--wrap__item--fullview">
-              <router-link class="font__blue font__weight--500 text__decoration--none" :to="`/movie/${movie.id}`">View Details</router-link>
+              <router-link
+                class="font__blue font__weight--500 text__decoration--none"
+                :to="`/movie/${movie.id}/${createSlug(movie.title)}`"
+              >
+                View Details
+              </router-link>
             </div>
           </div>
         </div>

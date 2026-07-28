@@ -1,82 +1,81 @@
-<script setup>
-  import { ref, computed, onMounted } from 'vue'
-  import { useRoute } from "vue-router";
-  import axios from 'axios'
-  
-  const route = useRoute();
-  const movieDetails = ref([])
-  const data = ref({});
-
-  onMounted(async () => {
-    const id = route.params.id;
-    try {
+  <script setup>
+    import { ref, computed, onMounted } from 'vue'
+    import { useRoute } from "vue-router";
+    import axios from 'axios'
+    import { createSlug } from '@/utils/commonFuntions'
+    
+    const route = useRoute();
+    const movieDetails = ref({})
+    const fetchMovieDetails = async () => {
       const response = await axios.get(
-        'https://jsonfakery.com/movies/infinite-scroll'
-      )
-      const details = response.data.data      
-      movieDetails.value = details
-      const newArray = details.filter((element, index, array) => {
-        if(id == element.movie_id){
-          data.value = element;
-        }     
-      });
-    } catch (error) {
-      console.error(error)
-    }
-  });  
-</script>
+        `https://fooapi.com/api/movies/${route.params.id}`
+      );
 
-<template v-if="data">
-  <section
-    class="banner__main"
-    :style="{
-      backgroundImage: `url(${data.backdrop_path})`
-    }"
-  >
-    <div class="container height__100">
-      <div class="banner__main--wrap">
-        <div class="banner__main--wrap__title">
-          <h2 class="font__weight--700 font__blue">
-            {{ data.original_title }}
-          </h2>
+      movieDetails.value = response.data.data;
+      const correctSlug = createSlug(movieDetails.value.title);
+      if (route.params.slug !== correctSlug) {
+        router.replace(`/movie/${route.params.id}/${correctSlug}`);
+      }
+    };
+
+    onMounted(fetchMovieDetails)
+  </script>
+
+  <template>
+    <section
+      class="banner__main"
+      :style="{
+        backgroundImage: `url(${movieDetails.poster})`,
+      }"
+    >
+      <div class="container height__100">
+        <div class="banner__main--wrap">
+          <div class="banner__main--wrap__title">
+            <h2 class="font__weight--700 font__blue">
+              {{ movieDetails.title }}
+            </h2>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <section class="details__main">
-    <div class="container">
-      <table class="table__main">
-        <tbody>
-          <tr>
-            <td>ID</td>
-            <td>{{ data.movie_id }}</td>
-          </tr>
-          <tr>
-            <td>Language</td>
-            <td>{{ data.original_language }}</td>
-          </tr>
-          <tr>
-            <td>Popularity</td>
-            <td>{{ data.popularity }}</td>
-          </tr>
-          <tr>
-            <td>Released On</td>
-            <td>{{ data.release_date }}</td>
-          </tr>
-          <tr>
-            <td>Updated On</td>
-            <td>{{ data?.updated_at ?? '-' }}</td>
-          </tr>
-          <tr>
-            <td>Votes</td>
-            <td>{{ data.vote_average }}</td>
-          </tr>
-          <tr>
-            <td>Vote Count</td>
-            <td>{{ data.vote_count }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</template>
+    </section>
+    <section class="details__main">
+      <div class="container">
+        <table class="table__main">
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>{{ movieDetails.id }}</td>
+            </tr>
+            <tr>
+              <td>Language</td>
+              <td>{{ movieDetails.language }}</td>
+            </tr>
+            <tr>
+              <td>Popularity</td>
+              <td>{{ movieDetails.director }}</td>
+            </tr>
+            <tr>
+              <td>Released On</td>
+              <td>{{ movieDetails.released }}</td>
+            </tr>
+            <tr>
+              <td>Updated On</td>
+              <td>{{ movieDetails.updated_at ?? '-' }}</td>
+            </tr>
+            <tr>
+              <td>Actors</td>
+              <td>{{ movieDetails.actors ?? '-' }}</td>
+            </tr>
+            <tr>
+              <td>Votes</td>
+              <td>{{ movieDetails.awards }}</td>
+            </tr>
+            <tr>
+              <td>Vote Count</td>
+              <td>{{ movieDetails.boxOffice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </template>
