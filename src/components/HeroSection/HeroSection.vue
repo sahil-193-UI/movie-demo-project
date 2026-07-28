@@ -17,7 +17,7 @@
         </div>
         <div class="hero__main--content__buttons">
           <button class="bg__white font__blue text__uppercase font__weight--700">Download Now</button>
-          <button class="bg__blue font__white text__uppercase font__weight--700">Download Now</button>
+          <button class="bg__blue font__white text__uppercase font__weight--700">Start Free Trial</button>
         </div>
       </div>
     </div>
