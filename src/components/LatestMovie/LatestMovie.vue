@@ -8,11 +8,11 @@
   const fetchLatestMovies = async () => {
     try {
       const response = await axios.get(
-        'https://jsonfakery.com/movies/infinite-scroll'
+        'https://fooapi.com/api/movies'
       )
       const movies = response.data.data
-      
       latestMovies.value = movies
+      
         .sort((a, b) => new Date(b.release_date) - new Date(a.release_date))
         .slice(0, 4)
 
@@ -49,23 +49,24 @@
             class="latest__main--wrap__item"
             v-for="movie in latestMovies"
             :key="movie.id"
+            :id="movie.id"
           >
             <div class="latest__main--wrap__item--img">
-              <img :src="movie.poster_path" :alt="movie.original_title" />
+              <img :src="movie.poster" :alt="movie.title" />
             </div>
             <div class="latest__main--wrap__item--details">
               <div class="latest__main--wrap__item--left">
-                <h5 class="font__weight--600">{{ movie.original_title }}</h5>
+                <h5 class="font__weight--600">{{ movie.title }}</h5>
               </div>
               <div class="latest__main--wrap__item--right">
-                <h5>{{ movie.release_date }}</h5>
+                <h5>{{ movie.released }}</h5>
               </div>
             </div>
             <div class="latest__main--wrap__item--desc">
-              <p>{{ truncateTitle(movie.overview) }}</p>
+              <p>{{ truncateTitle(movie.plot) }}</p>
             </div>
             <div class="latest__main--wrap__item--fullview">
-              <router-link class="font__blue font__weight--500 text__decoration--none" :to="`/movie/${movie.movie_id}`">View Details</router-link>
+              <router-link class="font__blue font__weight--500 text__decoration--none" :to="`/movie/${movie.id}`">View Details</router-link>
             </div>
           </div>
         </div>
