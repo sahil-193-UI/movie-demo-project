@@ -1,0 +1,19 @@
+.header {
+
+  &__main {
+    width: 100%;
+    padding: 20px 0;
+    background-color: $veryDarkBlue;
+  
+    &--right {
+
+      &__button {
+        background-color: $white;
+      }
+    }
+  }
+
+
+
+  
+}

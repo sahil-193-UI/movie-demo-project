@@ -1,0 +1,61 @@
+.latest {
+  &__main {
+    padding: 50px 0;
+    background-color: $lightWhite;
+
+    &--wrap {
+
+      &__title {
+        h2 {
+          text-align: center;
+          letter-spacing: 1px;
+          font-size: 54px;
+          margin-bottom: 50px;
+        }
+      }
+
+      &__items {
+        display: grid;
+        gap: 30px;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 100%;
+      }
+      
+      &__item {
+        max-width: 255px;
+        
+
+        &--img {
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+
+        &--details {
+          display: flex;
+          margin: 15px 0;
+          justify-content: space-between;
+        }
+      }
+
+      &__browse {
+        margin: 50px 0 0 0;
+        text-align: center;
+
+        a {
+          text-decoration: none;
+          border: none;
+          outline: none;
+          margin: 0 15px;
+          cursor: pointer;
+          font-size: 18px;
+          padding: 17px 41px;
+          letter-spacing: 1px;
+          border-radius: 30px;
+          box-shadow: 5px 5px 8px 0 rgba(0,0,0,0.4);
+        }
+      }
+    }
+  }
+}
