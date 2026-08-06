@@ -63,8 +63,6 @@
         password: form.password,
       });
 
-      localStorage.setItem("token", response.data.token);
-      // 2. Fetch user details into Pinia state
       router.push("/");
     } catch (error) {
       const status = error.response?.status;

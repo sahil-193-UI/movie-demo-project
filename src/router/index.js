@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import api from '@/services/api'
 import Home from '@/views/Home.vue'
 import AllMovies from '@/views/AllMovies.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
@@ -47,21 +48,25 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  // Replace this check with your actual auth status (localStorage, Cookie, Pinia store, etc.)
-  const isAuthenticated = Boolean(localStorage.getItem('token'))
+router.beforeEach(async (to, from, next) => {
   const publicPages = ['/login', '/sign-up']
   const authRequired = !publicPages.includes(to.path)
 
-  if (authRequired && !isAuthenticated) {
-    // Redirect unauthenticated user to login page
-    next({ name: 'Login' })
-  } else if (!authRequired && isAuthenticated) {
-    // Optional: Keep logged-in users from visiting login page
-    next({ name: 'Home' })
-  } else {
-    // Proceed normally
+  if (!authRequired) {
+    try {
+      await api.get('/auth/me')
+      next({ name: 'Home' })
+    } catch {
+      next()
+    }
+    return
+  }
+
+  try {
+    await api.get('/auth/me')
     next()
+  } catch {
+    next({ name: 'Login' })
   }
 })
 

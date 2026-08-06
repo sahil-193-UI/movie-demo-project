@@ -18,13 +18,7 @@
 
   const fetchUserProfile = async () => {
     try {
-      const token = localStorage.getItem('token')
-      if (!token) return
-      const response = await api.get('/auth/me', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+      const response = await api.get('/auth/me')
       const details = response.data
       userDetails.value = details
     } catch (error) {
@@ -41,8 +35,6 @@
     } catch (error) {
       console.error('Error during backend logout:', error);
     } finally {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
       router.push('/login');
     }
   };
@@ -52,7 +44,7 @@
   };
 </script>
 
-<template>
+<template v-if="isOpen">
   <aside class="sidebar__main" :class="{ 'active': isOpen }">
     <button class="sidebar__main--close" @click.stop="closeSidebar">
       <OhVueIcon name="io-close" scale="1.5" />
