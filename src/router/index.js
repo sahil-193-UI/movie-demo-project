@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import api from '@/services/api'
+import { getAuthState, getAuthToken } from '@/utils/cookies'
 import Home from '@/views/Home.vue'
 import AllMovies from '@/views/AllMovies.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
@@ -48,26 +49,28 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/sign-up']
   const authRequired = !publicPages.includes(to.path)
+  const hasToken = Boolean(getAuthToken())
+  const isAuthenticated = hasToken || getAuthState()
 
-  if (!authRequired) {
-    try {
-      await api.get('/auth/me')
-      next({ name: 'Home' })
-    } catch {
-      next()
-    }
+  if (to.name === 'Login' && isAuthenticated) {
+    next({ name: 'Home' })
     return
   }
 
-  try {
-    await api.get('/auth/me')
+  if (!authRequired) {
     next()
-  } catch {
-    next({ name: 'Login' })
+    return
   }
+
+  if (!isAuthenticated) {
+    next({ name: 'Login' })
+    return
+  }
+
+  next()
 })
 
 export default router

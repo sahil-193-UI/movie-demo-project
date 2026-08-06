@@ -70,8 +70,6 @@
       form.password = "";
 
     } catch (err) {
-      console.error("Signup Request Error:", err);
-
       if (err.response?.status === 422) {
         // Laravel / Express validation errors
         const apiErrors = err.response.data.errors;

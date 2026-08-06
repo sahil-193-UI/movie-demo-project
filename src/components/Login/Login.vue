@@ -5,6 +5,7 @@
   import { reactive, ref } from "vue";
   import api from "@/services/api";
   import { useRouter } from "vue-router";
+  import { setAuthState, setAuthToken } from "@/utils/cookies";
 
   const showPassword = ref(false);
   const message = ref("");
@@ -63,7 +64,47 @@
         password: form.password,
       });
 
-      router.push("/");
+      const payload = response?.data?.data ?? response?.data;
+      const loginUser = payload?.user || response?.data?.user || payload?.data?.user || null;
+      const token =
+        payload?.token ||
+        payload?.accessToken ||
+        payload?.jwt ||
+        payload?.access_token ||
+        response?.data?.token ||
+        response?.data?.accessToken ||
+        response?.data?.jwt ||
+        response?.data?.access_token ||
+        response?.data?.data?.token ||
+        response?.data?.data?.accessToken ||
+        response?.data?.data?.jwt ||
+        response?.data?.user?.token ||
+        response?.data?.user?.accessToken ||
+        response?.data?.user?.jwt ||
+        response?.headers?.authorization ||
+        response?.headers?.Authorization;
+
+      if (token) {
+        const normalizedToken = typeof token === 'string' && token.startsWith('Bearer ') ? token.slice(7) : token;
+        setAuthToken(normalizedToken);
+      } else {
+        setAuthState(true);
+      }
+
+      const isLoginSuccess =
+        response?.status >= 200 &&
+        response?.status < 300 &&
+        (Boolean(token) || Boolean(loginUser) || payload?.success === true || /success|logged in|welcome/i.test(String(payload?.message || '')));
+
+      if (!isLoginSuccess) {
+        return;
+      }
+
+      if (loginUser) {
+        await router.push({ name: 'Home' });
+      } else {
+        router.replace({ name: 'Home' });
+      }
     } catch (error) {
       const status = error.response?.status;
       const apiMessage = error.response?.data?.message || error.response?.data?.error || "";

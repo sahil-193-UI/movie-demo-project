@@ -2,6 +2,7 @@
   import { useRouter } from "vue-router";
   import { ref, onMounted } from "vue";
   import api from "@/services/api";
+  import { clearAuthToken, getAuthToken } from "@/utils/cookies";
   import { OhVueIcon, addIcons } from "oh-vue-icons";
   import { IoClose, LaInstagram, CoFacebookF, RiUser3Fill, CoTwitter } from "oh-vue-icons/icons";
 
@@ -17,12 +18,20 @@
   const userDetails = ref(null)
 
   const fetchUserProfile = async () => {
+    const token = getAuthToken();
+    console.log('getAuthToken:', token);
+
     try {
-      const response = await api.get('/auth/me')
-      const details = response.data
-      userDetails.value = details
+      const response = await api.get('/auth/me');
+      console.log('/auth/me response:', response);
+      const details = response.data;
+      userDetails.value = details;
     } catch (error) {
-      console.error('Failed to fetch user profile:', error)
+      console.error('/auth/me error:', error?.response || error);
+      if (error?.response?.status === 401) {
+        // backend indicates unauthorized — clear local token
+        clearAuthToken();
+      }
     }
   }
 
@@ -35,6 +44,7 @@
     } catch (error) {
       console.error('Error during backend logout:', error);
     } finally {
+      clearAuthToken();
       router.push('/login');
     }
   };
