@@ -1,0 +1,124 @@
+.sidebar {
+
+  &__main {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 250px;
+    position: absolute;
+    background-color: $white;
+    transition: all 0.6s ease 0s;
+    transform: translateX(-255px);
+
+    &::before {
+      top: 0;
+      content: "";
+      left: 250px;
+      height: 100dvh;
+      position: absolute;
+      transform: scaleX(0);
+      transform-origin: left;
+      width: calc(100dvw - 265px);
+      transition: transform 0.6s ease;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &--close {
+      top: 5px;
+      right: 5px;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      color: $veryDarkBlue;
+    }
+
+    &.active {
+      transform: translateX(0);
+
+      &::before {
+        transform: scaleX(1);
+      }
+    }
+
+    &--wrap {
+      display: flex;
+      height: 100dvh;
+      align-items: center;
+      flex-direction: column;
+      padding: 60px 15px 30px 15px;
+      justify-content: space-between;
+    }
+
+    &--head {
+      &__wrap {
+        width: 100%;
+        text-align: center;
+
+        &--img {
+          width: 75px;
+          height: 75px;
+          display: flex;
+          align-items: center;
+          border-radius: 100%;
+          justify-content: center;
+          margin: 0 auto 15px auto;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+
+    &--body {
+      width: 100%;
+
+      ul {
+        padding: 0;
+      }
+
+      li {
+        display: block;
+
+        a {
+          padding: 10px 5px;
+          display: block;
+          text-decoration: none;
+          color: $veryDarkBlue;
+        }
+
+        button {
+          font-size: 16px;
+          padding: 10px 5px;
+          display: block;
+        }
+      }
+    }
+
+    &--foot {
+      ul {
+        padding: 0;
+      }
+
+      li {
+        display: inline-block;
+
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $white;
+          transition: all 0.3s ease-in-out;
+          height: 35px;
+          width: 35px;
+          border-radius: 100%;
+          background-color: $veryDarkBlue;
+          margin: 0 7px;
+
+          &:hover {
+            color: $error;
+          }
+        }
+      }
+    }
+  }
+}

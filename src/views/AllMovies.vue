@@ -3,7 +3,7 @@
   import HeroSection from '@/components/HeroSection/HeroSection.vue'
   import placeholderImage from '@/assets/images/movie-poster-placeholder.png'
   import CardPlaceholder from '@/components/Placeholders/CardPlaceholder/CardPlaceholder.vue'
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import axios from 'axios'
 
   const allMovies = ref([])

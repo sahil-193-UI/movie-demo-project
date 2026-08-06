@@ -1,5 +1,11 @@
 <script setup>
   import companyLogo from '@/assets/default-logo.png';
+  
+  const props = defineProps({
+    isOpen: Boolean
+  });
+
+  const emit = defineEmits(['update:isOpen'])
 </script>
 
 <template>
@@ -12,11 +18,11 @@
           </RouterLink>
         </div>
         <div class="header__main--right">
-          <div class="header__main--right__button">
+          <button class="header__main--right__button" @click="emit('update:isOpen', !isOpen)">
             <span></span>
             <span></span>
             <span></span>
-          </div>
+          </button>
         </div>
       </div>  
     </div>

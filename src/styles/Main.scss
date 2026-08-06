@@ -4,9 +4,26 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.position {
+  &__relative {
+    position: relative;
+  }
+}
+
 .bg {
   &__white {
     background-color: $white;
+
+    &--outline {
+      border: 1px solid $white;
+    }
   }
 
   &__blue {
@@ -26,6 +43,10 @@ body {
 
   // font-weights
   &__weight {
+
+    &--400 {
+      font-weight: $fontWeight400;
+    }
 
     &--500 {
       font-weight: $fontWeight500;

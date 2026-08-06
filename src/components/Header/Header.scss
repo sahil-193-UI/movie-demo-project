@@ -4,11 +4,35 @@
     width: 100%;
     padding: 20px 0;
     background-color: $veryDarkBlue;
+
+    &--wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &--left {
+      a {
+
+        img {
+          display: block;
+        }
+      }
+    }
   
     &--right {
 
       &__button {
-        background-color: $white;
+
+        span {
+          height: 3px;
+          width: 26px;
+          margin: 6px 0;
+          display: block;
+          border-radius: 2px;
+          background-color: $white;
+        }
+
       }
     }
   }

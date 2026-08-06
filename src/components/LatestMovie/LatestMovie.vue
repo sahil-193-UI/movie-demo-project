@@ -2,7 +2,7 @@
   import { truncateText, createSlug } from '@/utils/commonFuntions';
   import CardPlaceholder from '@/components/Placeholders/CardPlaceholder/CardPlaceholder.vue'
   import placeholderImage from '@/assets/images/movie-poster-placeholder.png'
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import axios from 'axios'
   
   const latestMovies = ref([])
