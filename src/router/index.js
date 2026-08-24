@@ -6,6 +6,7 @@ import MovieDetails from '@/views/MovieDetails.vue'
 import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
 import ForgotPassword from '@/views/ForgotPassword.vue'
+import ResetPassword from '@/views/ResetPassword.vue'
 import Error from '@/views/Error.vue'
 
 const routes = [
@@ -56,6 +57,14 @@ const routes = [
     component: ForgotPassword,
     meta: {
       title: 'Forgot Password'
+    }
+  },
+  {
+    path: '/reset-password/:token?',
+    name: 'ResetPassword',
+    component: ResetPassword,
+    meta: {
+      title: 'Reset Password'
     }
   },
   {
