@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import api from '@/services/api'
 import { getAuthState, getAuthToken } from '@/utils/cookies'
 import Home from '@/views/Home.vue'
 import AllMovies from '@/views/AllMovies.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
 import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
+import ForgotPassword from '@/views/ForgotPassword.vue'
 import Error from '@/views/Error.vue'
 
 const routes = [
@@ -14,33 +14,57 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      requiresAuth: true 
+      title: 'Home',
+      requiresAuth: true
     }
   },
   {
     path: '/all-movies',
     name: 'AllMovies',
-    component: AllMovies
+    component: AllMovies,
+    meta: {
+      title: 'Movies'
+    }
   },
   {
-    path: "/movie/:id/:slug",
-    name: "MovieDetails",
-    component: MovieDetails
+    path: '/movie/:id/:slug',
+    name: 'MovieDetails',
+    component: MovieDetails,
+    meta: {
+      title: 'Details'
+    }
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
   },
   {
-    path: "/sign-up",
-    name: "SignUp",
-    component: SignUp
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUp,
+    meta: {
+      title: 'Signup'
+    }
   },
   {
-    path: "/:pathMatch(.*)*",
-    name: "Error",
-    component: Error
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+    meta: {
+      title: 'Forgot Password'
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Error',
+    component: Error,
+    meta: {
+      title: '404'
+    }
   }
 ]
 
@@ -50,17 +74,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/sign-up']
-  const authRequired = !publicPages.includes(to.path)
-  const hasToken = Boolean(getAuthToken())
-  const isAuthenticated = hasToken || getAuthState()
+  const isAuthenticated = Boolean(getAuthToken()) || Boolean(getAuthState())
 
   if (to.name === 'Login' && isAuthenticated) {
     next({ name: 'Home' })
     return
   }
 
-  if (!authRequired) {
+  const requiresAuth = to.matched.some((record) => record.meta?.requiresAuth)
+
+  if (!requiresAuth) {
     next()
     return
   }
@@ -71,6 +94,10 @@ router.beforeEach((to, from, next) => {
   }
 
   next()
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.title || 'My App'
 })
 
 export default router

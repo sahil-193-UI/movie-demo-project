@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <template v-if="route.path !== '/login' && route.path !== '/sign-up'">
+  <template v-if="route.path !== '/login' && route.path !== '/sign-up' && route.path !== '/forgot-password'">
     <Header v-model:isOpen="isSidebarOpen" />
     <SideBar v-model:isOpen="isSidebarOpen" />
   </template>

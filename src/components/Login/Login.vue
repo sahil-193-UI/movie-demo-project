@@ -65,7 +65,11 @@
       });
 
       const payload = response?.data?.data ?? response?.data;
-      const loginUser = payload?.user || response?.data?.user || payload?.data?.user || null;
+      const loginUser =
+        payload?.user ||
+        response?.data?.user ||
+        payload?.data?.user ||
+        (payload && typeof payload === 'object' && !Array.isArray(payload) ? payload : null);
       const token =
         payload?.token ||
         payload?.accessToken ||
@@ -87,7 +91,7 @@
       if (token) {
         const normalizedToken = typeof token === 'string' && token.startsWith('Bearer ') ? token.slice(7) : token;
         setAuthToken(normalizedToken);
-      } else {
+      } else if (loginUser) {
         setAuthState(true);
       }
 
@@ -98,6 +102,11 @@
 
       if (!isLoginSuccess) {
         return;
+      }
+
+      if (isLoginSuccess) {
+        router.replace({ name: 'Home' });
+        // return;
       }
 
       if (loginUser) {

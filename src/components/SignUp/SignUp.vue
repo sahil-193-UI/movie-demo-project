@@ -104,7 +104,6 @@
   addIcons(FaRegularEye, FaRegularEyeSlash);
 </script>
 
-
 <template>
   <section class="signup__main">
     <div class="container height__100">

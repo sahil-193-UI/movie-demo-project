@@ -23,8 +23,6 @@ export const setAuthToken = (token) => {
   if (typeof window === 'undefined') return;
 
   if (!token) {
-    window.sessionStorage.removeItem('authToken');
-    window.localStorage.removeItem('authToken');
     deleteCookie('authToken');
     setAuthState(false);
     return;
@@ -32,8 +30,6 @@ export const setAuthToken = (token) => {
 
   const normalizedToken = typeof token === 'string' && token.startsWith('Bearer ') ? token.slice(7) : token;
 
-  window.sessionStorage.setItem('authToken', normalizedToken);
-  window.localStorage.setItem('authToken', normalizedToken);
   setCookie('authToken', normalizedToken, 7);
   setAuthState(true);
 };
@@ -42,41 +38,25 @@ export const setAuthState = (isAuthenticated) => {
   if (typeof window === 'undefined') return;
 
   const value = isAuthenticated ? 'true' : 'false';
-  window.sessionStorage.setItem('isAuthenticated', value);
-  window.localStorage.setItem('isAuthenticated', value);
+  setCookie('isAuthenticated', value, 7);
 };
 
 export const getAuthState = () => {
   if (typeof window === 'undefined') return false;
 
-  const sessionState = window.sessionStorage.getItem('isAuthenticated');
-  if (sessionState !== null) {
-    return sessionState === 'true';
-  }
-
-  const localState = window.localStorage.getItem('isAuthenticated');
-  return localState === 'true';
+  return getCookie('isAuthenticated') === 'true';
 };
 
 export const getAuthToken = () => {
   if (typeof window === 'undefined') return '';
-
-  const sessionToken = window.sessionStorage.getItem('authToken') || '';
-  if (sessionToken) return sessionToken;
-
-  const localToken = window.localStorage.getItem('authToken') || '';
-  if (localToken) return localToken;
 
   return getCookie('authToken') || '';
 };
 
 export const clearAuthToken = () => {
   if (typeof window === 'undefined') return;
-  window.sessionStorage.removeItem('authToken');
-  window.localStorage.removeItem('authToken');
-  window.sessionStorage.removeItem('isAuthenticated');
-  window.localStorage.removeItem('isAuthenticated');
   deleteCookie('authToken');
+  deleteCookie('isAuthenticated');
 };
 
 export const getCookie = (name) => {

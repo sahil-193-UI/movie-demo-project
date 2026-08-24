@@ -19,11 +19,11 @@
 
   const fetchUserProfile = async () => {
     const token = getAuthToken();
-    console.log('getAuthToken:', token);
+    // console.log('getAuthToken:', token);
 
     try {
       const response = await api.get('/auth/me');
-      console.log('/auth/me response:', response);
+      // console.log('/auth/me response:', response);
       const details = response.data;
       userDetails.value = details;
     } catch (error) {
