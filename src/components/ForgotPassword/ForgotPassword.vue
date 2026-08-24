@@ -79,7 +79,7 @@
       form.email = "";
 
       setTimeout(() => {
-        router.push({ name: "Login" });
+        router.push({ name: "ResetPassword" });
       }, 1200);
     } catch (error) {
       const status = error.response?.status;
