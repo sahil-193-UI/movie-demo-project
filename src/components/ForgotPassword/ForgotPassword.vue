@@ -44,31 +44,9 @@
     message.value = "";
 
     try {
-      const endpoints = [
-        "/auth/forgot-password",
-        "/auth/request-password-reset",
-        "/auth/send-reset-link",
-        "/auth/reset-password"
-      ];
-
-      let lastError = null;
-      let response = null;
-
-      for (const endpoint of endpoints) {
-        try {
-          response = await api.post(endpoint, { email: form.email.trim() });
-          break;
-        } catch (error) {
-          lastError = error;
-          if (error.response?.status !== 404) {
-            throw error;
-          }
-        }
-      }
-
-      if (!response) {
-        throw lastError;
-      }
+      const response = await api.post("/auth/forgot-password", {
+        email: form.email.trim(),
+      });
 
       const successMessage =
         response?.data?.message ||
@@ -77,10 +55,6 @@
 
       message.value = successMessage;
       form.email = "";
-
-      setTimeout(() => {
-        router.push({ name: "ResetPassword" });
-      }, 1200);
     } catch (error) {
       const status = error.response?.status;
       const apiMessage = error.response?.data?.message || error.response?.data?.error || "";
@@ -95,7 +69,7 @@
     } finally {
       loading.value = false;
     }
-  };
+  }; 
 </script>
 
 <template>

@@ -9,9 +9,17 @@
 </script>
 
 <template>
-  <template v-if="route.path !== '/login' && route.path !== '/sign-up' && route.path !== '/forgot-password' && route.path !== '/reset-password'">
-    <Header v-model:isOpen="isSidebarOpen" />
-    <SideBar v-model:isOpen="isSidebarOpen" />
+  <template
+    v-if="route.path !== '/login' && route.path !== '/sign-up' && route.path !== '/forgot-password' && route.path !== '/reset-password'"
+  >
+    <Header
+      v-model:isOpen="isSidebarOpen"
+    />
+    <SideBar
+      v-model:isOpen="isSidebarOpen"
+    />
+    <main class="app__main">
+      <router-view />
+    </main>
   </template>
-  <router-view />
 </template>

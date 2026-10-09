@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { getAuthState, getAuthToken } from '@/utils/cookies'
 import Home from '@/views/Home.vue'
 import AllMovies from '@/views/AllMovies.vue'
+import UsersList from '@/views/UsersList.vue'
 import MovieDetails from '@/views/MovieDetails.vue'
 import Login from '@/views/Login.vue'
 import SignUp from '@/views/SignUp.vue'
@@ -16,6 +17,15 @@ const routes = [
     component: Home,
     meta: {
       title: 'Home',
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/users-list',
+    name: 'UsersList',
+    component: UsersList,
+    meta: {
+      title: 'Users List',
       requiresAuth: true
     }
   },

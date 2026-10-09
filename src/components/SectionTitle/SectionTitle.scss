@@ -1,0 +1,29 @@
+.title {
+  &__main {
+    margin: 50px 0;
+  }
+
+  &__inner {
+    z-index: 1;
+    height: 230px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: "";
+      z-index: -1;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      font-size: 36px;
+    }
+  }
+}

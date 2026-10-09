@@ -55,7 +55,7 @@
 </script>
 
 <template v-if="isOpen">
-  <aside class="sidebar__main" :class="{ 'active': isOpen }">
+  <aside class="sidebar__main app__sidebar" :class="{ 'active': isOpen }">
     <button class="sidebar__main--close" @click.stop="closeSidebar">
       <OhVueIcon name="io-close" scale="1.5" />
     </button>
@@ -74,13 +74,16 @@
       <div class="sidebar__main--body">
         <ul type="none">
           <li>
-            <router-link to="#">Dashboard</router-link>
+            <router-link to="/">Dashboard</router-link>
           </li>
           <li>
-            <router-link to="#">Profile</router-link>
+            <router-link to="/profile">Profile</router-link>
           </li>
           <li>
-            <router-link to="#">Settings</router-link>
+            <router-link to="/settings">Settings</router-link>
+          </li>
+          <li>
+            <router-link to="/users-list">All Users</router-link>
           </li>
           <li>
             <button @click="handleLogout" class="font__blue">Logout</button>

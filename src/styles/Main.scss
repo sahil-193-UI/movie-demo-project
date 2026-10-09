@@ -11,6 +11,33 @@ button {
   background-color: transparent;
 }
 
+.app {
+  &__wrap {
+    display: grid;
+    grid-template-areas:
+      "header header"
+      "sidebar main";
+  }
+
+  &__header {
+    grid-area: header;
+  }
+  
+  &__sidebar {
+    grid-area: sidebar;
+    height: calc(100dvh - 81px);
+  }
+  
+  &__main {
+    grid-area: main;
+    width: calc(100vw - 265px);
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+}
+
 .position {
   &__relative {
     position: relative;
@@ -22,14 +49,14 @@ button {
     background-color: $white;
 
     &--outline {
-      border: 1px solid $white;
+      border: 1px solid $veryDarkBlue;
     }
   }
 
   &__blue {
     background-color: $veryDarkBlue;
   }
-} 
+}
 
 .font {
   // Colors
@@ -112,6 +139,14 @@ button {
         }
       }
     }
+  }
+
+  &__btn {
+    width: 28px;
+    padding: 4px;
+    height: 28px;
+    margin: 0 5px 0 0;
+    border-radius: 5px;
   }
 }
 
@@ -234,4 +269,87 @@ button {
   &__main {
     padding: 50px 0;
   }
+}
+
+.modal {
+  width: 500px;
+  background: $white;
+  border-radius: 8px;
+  max-width: calc(100% - 30px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+  &__overlay {
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &__header {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+
+    h3 {
+      margin: 0;
+    }
+  }
+
+  &__body {
+    padding: 20px;
+  }
+
+  &__footer {
+    gap: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #eee;
+  }
+
+  &__button {
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 4px;
+  }
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn-edit {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #dc2626;
+  color: #fff;
 }

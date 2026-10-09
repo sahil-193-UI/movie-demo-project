@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <header class="header__main">
+  <header class="header__main app__header">
     <div class="container">
       <div class="header__main--wrap">
         <div class="header__main--left">
