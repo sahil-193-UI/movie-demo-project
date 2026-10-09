@@ -8,8 +8,6 @@
   addIcons(MdModeeditoutlineOutlined, MdDeleteforeverOutlined)
   import api from "@/services/api";
 
-  import axios from 'axios'
-
   const allUsers = ref([])
   const loading = ref(true);
   const showModal = ref(false)
@@ -19,11 +17,8 @@
   const fetchAllUsers = async () => {
     loading.value = true;
     try {
-      const response = await axios.get(
-        'http://localhost:5000/api/auth/users'
-      )
+      const response = await api.get("/auth/users");
       const users = response.data.users
-      console.log(users, "user");   
       allUsers.value = users
     } catch (error) {
       console.error(error)
@@ -56,13 +51,10 @@
 
   const updateUser = async () => {
     try {
-      await axios.put(
-        `http://localhost:5000/api/auth/users/${selectedUser.value._id}`,
-        {
-          name: selectedUser.value.name,
-          email: selectedUser.value.email
-        }
-      )
+      await api.put(`/auth/users/${selectedUser.value._id}`, {
+        name: selectedUser.value.name,
+        email: selectedUser.value.email
+      });
       // Update table immediately
       const index = allUsers.value.findIndex(
         user => user._id === selectedUser.value._id
@@ -80,9 +72,11 @@
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(
-        `http://localhost:5000/api/auth/users/${selectedUser.value._id}`
-      )
+      await api.delete(`/auth/users/${selectedUser.value._id}`);
+      allUsers.value = allUsers.value.filter(
+        user => user._id !== selectedUser.value._id
+      );
+      closeModal();
       // Remove user from table
       allUsers.value = allUsers.value.filter(
         user => user._id !== selectedUser.value._id

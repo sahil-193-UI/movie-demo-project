@@ -224,7 +224,7 @@
                 <p class="font__white">Create your account now and step into an amazing new journey.</p>
               </div>
               <div class="login__main--content__inner--right__button">
-                <router-link class="font__white font__weight--400 bg__white--outline text__decoration--none" to="/sign-up">
+                <router-link class="font__white font__weight--400 bg__white--outline text__decoration--none" to="/signup">
                   Sign Up
                 </router-link>
               </div>

@@ -54,7 +54,7 @@ const routes = [
     }
   },
   {
-    path: '/sign-up',
+    path: '/signup',
     name: 'SignUp',
     component: SignUp,
     meta: {
@@ -92,27 +92,19 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const isAuthenticated = Boolean(getAuthToken()) || Boolean(getAuthState())
-
   if (to.name === 'Login' && isAuthenticated) {
-    next({ name: 'Home' })
-    return
+    return { name: 'Home' }
   }
-
   const requiresAuth = to.matched.some((record) => record.meta?.requiresAuth)
-
   if (!requiresAuth) {
-    next()
-    return
+    return true
   }
-
   if (!isAuthenticated) {
-    next({ name: 'Login' })
-    return
+    return { name: 'Login' }
   }
-
-  next()
+  return true
 })
 
 router.afterEach((to) => {
