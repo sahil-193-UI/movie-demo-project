@@ -1,0 +1,39 @@
+.pagination {
+  gap: 16px;
+  display: flex;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: space-between;
+
+  &__summary {
+    font-size: 12px;
+    color: $veryDarkBlue;
+  }
+
+  &__controls {
+    gap: 6px;
+    display: flex;
+    flex-wrap: wrap;
+
+    button {
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      border-radius: 4px;
+      color: $veryDarkBlue;
+      border: 1px solid $tableBorder;
+      
+      &.is-active {
+        color: $white;
+        background: $veryDarkBlue;
+        border: 1px solid $veryDarkBlue;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

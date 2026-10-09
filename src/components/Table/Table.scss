@@ -1,6 +1,7 @@
 .table {
   &__wrapper {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     
     th,
@@ -13,7 +14,7 @@
 
   &__head {
     th {
-      font-weight: 700;
+      font-weight: $fontWeight700;
     }
   }
 

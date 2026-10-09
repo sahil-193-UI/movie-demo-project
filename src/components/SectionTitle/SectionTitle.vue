@@ -14,15 +14,13 @@
 
 <template>
   <section class="title__main">
-    <div class="container">
-      <div
-        class="title__inner"
-        :style="{
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none'
-        }"
-      >
-        <h2 class="text__uppercase font__white font__weight--700">{{ pageTitle }}</h2>
-      </div>
+    <div
+      class="title__inner"
+      :style="{
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none'
+      }"
+    >
+      <h2 class="text__uppercase font__white font__weight--700">{{ pageTitle }}</h2>
     </div>
   </section>  
 </template>
